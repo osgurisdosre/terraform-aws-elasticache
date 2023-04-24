@@ -90,5 +90,15 @@
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_cache_instance_endpoint"></a> [cache\_instance\_endpoint](#output\_cache\_instance\_endpoint) | The DNS address of the DocDB Cluster |
+| <a name="output_cache_instance_password"></a> [cache\_instance\_password](#output\_cache\_instance\_password) | The cache password (this password may be old, because Terraform doesn't track it after initial creation) |
+| <a name="output_db_instance_endpoint_reader"></a> [db\_instance\_endpoint\_reader](#output\_db\_instance\_endpoint\_reader) | The DNS address of the DocDB Cluster |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Authors
+
+Module is maintained by [Emidio Neto](https://github.com/emdneto), [Leonardo Jardim](https://github.com/leojaardim) and [Yuri Azeredo](https://github.com/yuriazeredo)
+## License
+
+Apache 2 Licensed. See [LICENSE](https://github.com/osgurisdosre/terraform-aws-documentdb/blob/main/LICENSE) for full details.
