@@ -279,8 +279,8 @@ variable "user_id" {
   description = "The ID of the user."
 }
 variable "user_name" {
-  type = string
-  #default     = ""
+  type        = string
+  default     = ""
   description = " The username of the user."
 }
 variable "access_string" {

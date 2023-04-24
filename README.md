@@ -86,7 +86,7 @@
 | <a name="input_user_group_id"></a> [user\_group\_id](#input\_user\_group\_id) | The user group identifier. | `string` | `""` | no |
 | <a name="input_user_group_ids"></a> [user\_group\_ids](#input\_user\_group\_ids) | User Group ID to associate with the replication group. | `list(string)` | `[]` | no |
 | <a name="input_user_id"></a> [user\_id](#input\_user\_id) | The ID of the user. | `string` | `null` | no |
-| <a name="input_user_name"></a> [user\_name](#input\_user\_name) | The username of the user. | `string` | n/a | yes |
+| <a name="input_user_name"></a> [user\_name](#input\_user\_name) | The username of the user. | `string` | `""` | no |
 
 ## Outputs
 
