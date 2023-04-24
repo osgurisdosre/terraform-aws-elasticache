@@ -31,6 +31,6 @@ terraform {
 }
 
 provider "aws" {
-  profile = sso-sirena
-  region  = us-east-1
+  profile = "sso-sirena"
+  region  = "us-east-1"
 }

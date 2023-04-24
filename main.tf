@@ -1,9 +1,9 @@
 locals {
-  elasticache_parameter_group   = var.create_elasticache_parameter_group ? module.elasticache_parameter_group.elasticache_parameter_group_id : var.parameter_group_name
-  elasticache_subnet_group      = var.create_elasticache_subnet_group ? module.elasticache_subnet_group.elasticache_subnet_group_id : var.subnet_group_name
-  elasticache_user              = var.create_elasticache_user ? module.elasticache_user.elasticache_user_id : var.user_id
-  elasticache_user_group        = var.create_elasticache_user_group ? module.elasticache_user_group.elasticache_user_group_id : var.user_group_id
-  password                      = var.create_cache_password ? random_password.master_password[0].result : var.password_create
+  elasticache_parameter_group = var.create_elasticache_parameter_group ? module.elasticache_parameter_group.elasticache_parameter_group_id : var.parameter_group_name
+  elasticache_subnet_group    = var.create_elasticache_subnet_group ? module.elasticache_subnet_group.elasticache_subnet_group_id : var.subnet_group_name
+  elasticache_user            = var.create_elasticache_user ? module.elasticache_user.elasticache_user_id : var.user_id
+  elasticache_user_group      = var.create_elasticache_user_group ? module.elasticache_user_group.elasticache_user_group_id : var.user_group_id
+  password                    = var.create_cache_password ? random_password.master_password[0].result : var.password_create
 }
 
 resource "random_password" "master_password" {
@@ -38,24 +38,24 @@ resource "aws_elasticache_replication_group" "this" {
   final_snapshot_identifier   = var.final_snapshot_identifier
   global_replication_group_id = var.global_replication_group_id
   kms_key_id                  = var.kms_key_id
-  maintenance_window         = var.maintenance_window
-  multi_az_enabled           = var.multi_az_enabled
-  notification_topic_arn     = var.notification_topic_arn
-  num_node_groups            = var.num_node_groups
-  replicas_per_node_group    = var.replicas_per_node_group
-  security_group_ids         = var.security_group_ids
-  security_group_names       = var.security_group_names
-  snapshot_retention_limit   = var.snapshot_retention_limit
-  snapshot_window            = var.snapshot_window
-  snapshot_name = var.snapshot_name
-  subnet_group_name          = var.subnet_group_name
-  transit_encryption_enabled = var.transit_encryption_enabled
-  user_group_ids             = try(var.user_group_ids, module.elasticache_user_group_id)
+  maintenance_window          = var.maintenance_window
+  multi_az_enabled            = var.multi_az_enabled
+  notification_topic_arn      = var.notification_topic_arn
+  num_node_groups             = var.num_node_groups
+  replicas_per_node_group     = var.replicas_per_node_group
+  security_group_ids          = var.security_group_ids
+  security_group_names        = var.security_group_names
+  snapshot_retention_limit    = var.snapshot_retention_limit
+  snapshot_window             = var.snapshot_window
+  snapshot_name               = var.snapshot_name
+  subnet_group_name           = var.subnet_group_name
+  transit_encryption_enabled  = var.transit_encryption_enabled
+  user_group_ids              = try(var.user_group_ids, module.elasticache_user_group.id)
   #log_delivery_configuration  = var.log_delivery_configuration
   tags = {
     Name = var.replication_group_id
   }
-    depends_on = [
+  depends_on = [
     module.elasticache_parameter_group
   ]
 }
@@ -69,7 +69,7 @@ module "elasticache_parameter_group" {
   name        = var.parameter_group_name
   family      = var.family
   description = var.description_parameter
-  parameters = var.parameters
+  parameters  = var.parameters
 }
 
 module "elasticache_subnet_group" {
@@ -86,12 +86,12 @@ module "elasticache_user" {
   create                = var.create_elasticache_user
   create_cache_password = var.create_cache_password
 
-  user_id               = var.user_id
-  user_name             = var.user_name
-  access_string         = var.access_string
-  engine                = upper(var.engine)
+  user_id       = var.user_id
+  user_name     = var.user_name
+  access_string = var.access_string
+  engine        = upper(var.engine)
   authentication_mode = [{
-    type      = var.authentication_mode.type
+    type      = var.authentication_mode[0].type
     passwords = try(var.password, random_password.master_password.*.result)
   }]
 
