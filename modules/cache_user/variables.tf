@@ -47,3 +47,9 @@ variable "password_count" {
   type    = number
   default = 1
 }
+
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "A map of tags to add to all resources"
+}

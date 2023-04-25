@@ -60,9 +60,10 @@ resource "aws_elasticache_replication_group" "this" {
       log_type         = log_delivery_configuration.value.log_type
     }
   }
-  tags = {
-    Name = var.replication_group_id
-  }
+  tags = merge(
+    var.tags, {
+      Name = var.replication_group_id
+  })
   depends_on = [
     module.elasticache_parameter_group
   ]
@@ -78,6 +79,7 @@ module "elasticache_parameter_group" {
   family      = var.family
   description = var.description_parameter
   parameters  = var.parameters
+  tags        = var.tags
 }
 
 module "elasticache_subnet_group" {
@@ -87,6 +89,7 @@ module "elasticache_subnet_group" {
   name        = var.subnet_group_name
   subnet_ids  = var.subnet_ids
   description = var.description_subnet
+  tags        = var.tags
 }
 
 module "elasticache_user" {
@@ -102,7 +105,7 @@ module "elasticache_user" {
     type      = var.authentication_mode[0].type
     passwords = try(var.password, random_password.master_password.*.result)
   }]
-
+  tags = var.tags
 }
 
 module "elasticache_user_group" {
@@ -112,4 +115,5 @@ module "elasticache_user_group" {
   engine        = upper(var.engine)
   user_group_id = var.user_group_id
   user_ids      = [var.user_id]
+  tags          = var.tags
 }

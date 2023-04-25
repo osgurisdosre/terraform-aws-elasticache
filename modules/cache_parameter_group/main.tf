@@ -10,4 +10,5 @@ resource "aws_elasticache_parameter_group" "this" {
       value = parameter.value.value
     }
   }
+  tags = var.tags
 }

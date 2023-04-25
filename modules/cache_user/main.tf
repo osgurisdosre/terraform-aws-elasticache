@@ -17,4 +17,5 @@ resource "aws_elasticache_user" "this" {
       ]
     }
   }
+  tags = var.tags
 }

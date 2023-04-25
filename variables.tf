@@ -60,7 +60,7 @@ variable "replication_group_id" {
 
 variable "preferred_cache_cluster_azs" {
   type        = list(string)
-  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  default     = null
   description = "List of EC2 availability zones in which the replication group's cache clusters will be created."
 }
 
@@ -172,6 +172,7 @@ variable "replicas_per_node_group" {
 
 variable "security_group_ids" {
   type        = list(string)
+  default     = []
   description = "One or more Amazon VPC security groups associated with this replication group."
 }
 
@@ -317,5 +318,12 @@ variable "password_create" {
   type        = string
   default     = null
   description = "Password Create"
+}
+##############################################################################################
+#Common
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "A map of tags to add to all resources"
 }
 ##############################################################################################
