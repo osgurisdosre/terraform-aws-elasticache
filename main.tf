@@ -35,7 +35,7 @@ resource "aws_elasticache_replication_group" "this" {
   auth_token                  = var.auth_token
   auto_minor_version_upgrade  = var.auto_minor_version_upgrade
   data_tiering_enabled        = var.data_tiering_enabled
-  final_snapshot_identifier   = var.final_snapshot_identifier
+  final_snapshot_identifier   = try(var.final_snapshot_identifier, var.replication_group_id + "final")
   global_replication_group_id = var.global_replication_group_id
   kms_key_id                  = var.kms_key_id
   maintenance_window          = var.maintenance_window
