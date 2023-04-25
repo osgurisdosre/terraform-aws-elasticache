@@ -9,13 +9,9 @@ variable "user_id" {
 
 variable "authentication_mode" {
   type = list(object({
-    type      = string
-    passwords = list(string)
+    type      = optional(string)
+    passwords = optional(string)
   }))
-  default = [{
-    passwords = [null]
-    type      = null
-  }]
 }
 variable "user_name" {
   default = "testUserName"
@@ -29,27 +25,36 @@ variable "engine" {
   default = "REDIS"
 }
 
-variable "pass" {
-  type    = string
-  default = null
-}
-
 variable "no_password_required" {
   type    = bool
   default = false
 }
 
 variable "create_cache_password" {
-  type    = string
-  default = null
-}
-variable "password_count" {
-  type    = number
-  default = 1
+  type    = bool
+  default = false
 }
 
 variable "tags" {
   type        = map(string)
   default     = {}
   description = "A map of tags to add to all resources"
+}
+
+variable "password" {
+  description = "Password for the user."
+  type        = list(string)
+  default     = []
+}
+
+variable "random_password_length" {
+  type        = number
+  default     = 16
+  description = "The length of the string desired. "
+}
+
+variable "password_create" {
+  type        = string
+  default     = null
+  description = "Password Create"
 }

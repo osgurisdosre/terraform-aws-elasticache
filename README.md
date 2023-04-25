@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.1 |
 
@@ -38,7 +38,7 @@
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Specifies whether any modifications are applied immediately, or during the next maintenance window. | `bool` | `false` | no |
 | <a name="input_at_rest_encryption_enabled"></a> [at\_rest\_encryption\_enabled](#input\_at\_rest\_encryption\_enabled) | Whether to enable encryption at rest. | `bool` | `true` | no |
 | <a name="input_auth_token"></a> [auth\_token](#input\_auth\_token) | Password used to access a password protected server | `string` | `null` | no |
-| <a name="input_authentication_mode"></a> [authentication\_mode](#input\_authentication\_mode) | n/a | <pre>list(object({<br>    type      = string<br>    passwords = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "description": "Denotes the user's authentication properties.",<br>    "passwords": [<br>      null<br>    ],<br>    "type": null<br>  }<br>]</pre> | no |
+| <a name="input_authentication_mode"></a> [authentication\_mode](#input\_authentication\_mode) | Denotes the user's authentication properties. | <pre>list(object({<br>    type      = optional(string)<br>    passwords = optional(string)<br>  }))</pre> | n/a | yes |
 | <a name="input_auto_minor_version_upgrade"></a> [auto\_minor\_version\_upgrade](#input\_auto\_minor\_version\_upgrade) | Specifies whether minor version engine upgrades will be applied automatically to the underlying | `bool` | `false` | no |
 | <a name="input_automatic_failover_enabled"></a> [automatic\_failover\_enabled](#input\_automatic\_failover\_enabled) | Specifies whether a read-only replica will be automatically promoted to read/write primary if the existing primary fails. | `bool` | `true` | no |
 | <a name="input_create"></a> [create](#input\_create) | Create the resource? | `bool` | `true` | no |
@@ -68,7 +68,7 @@
 | <a name="input_num_node_groups"></a> [num\_node\_groups](#input\_num\_node\_groups) | Number of node groups (shards) for this Redis replication group. | `number` | `null` | no |
 | <a name="input_parameter_group_name"></a> [parameter\_group\_name](#input\_parameter\_group\_name) | The name of the ElastiCache parameter group. | `string` | `null` | no |
 | <a name="input_parameters"></a> [parameters](#input\_parameters) | List of DB parameters to apply | `list(map(string))` | `[]` | no |
-| <a name="input_password"></a> [password](#input\_password) | Password for the user. | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
+| <a name="input_password"></a> [password](#input\_password) | Password for the user. | `list(string)` | `[]` | no |
 | <a name="input_password_create"></a> [password\_create](#input\_password\_create) | Password Create | `string` | `null` | no |
 | <a name="input_port"></a> [port](#input\_port) | Port number on which each of the cache nodes will accept connections. | `number` | `6379` | no |
 | <a name="input_preferred_cache_cluster_azs"></a> [preferred\_cache\_cluster\_azs](#input\_preferred\_cache\_cluster\_azs) | List of EC2 availability zones in which the replication group's cache clusters will be created. | `list(string)` | `null` | no |

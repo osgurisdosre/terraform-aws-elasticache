@@ -7,7 +7,7 @@ locals {
 }
 
 resource "random_password" "master_password" {
-  count = var.create_cache_password ? 2 : 0
+  count = var.create_cache_password ? 1 : 0
 
   length  = var.random_password_length
   special = false
@@ -97,13 +97,15 @@ module "elasticache_user" {
   create                = var.create_elasticache_user
   create_cache_password = var.create_cache_password
 
-  user_id       = var.user_id
-  user_name     = var.user_name
-  access_string = var.access_string
-  engine        = upper(var.engine)
+  user_id              = var.user_id
+  user_name            = var.user_name
+  access_string        = var.access_string
+  engine               = upper(var.engine)
+  no_password_required = var.no_password_required
+  passwords            = var.pass
   authentication_mode = [{
     type      = var.authentication_mode[0].type
-    passwords = try(var.password, random_password.master_password.*.result)
+    passwords = try(var.password, local.password)
   }]
   tags = var.tags
 }

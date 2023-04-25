@@ -283,14 +283,10 @@ variable "access_string" {
 
 variable "authentication_mode" {
   type = list(object({
-    type      = string
-    passwords = list(string)
+    type      = optional(string)
+    passwords = optional(string)
   }))
-  default = [{
-    passwords   = [null]
-    type        = null
-    description = "Denotes the user's authentication properties."
-  }]
+  description = "Denotes the user's authentication properties."
 }
 ##############################################################################################
 #User Group
@@ -305,7 +301,7 @@ variable "user_group_id" {
 variable "password" {
   description = "Password for the user."
   type        = list(string)
-  default     = [""]
+  default     = []
 }
 
 variable "random_password_length" {
