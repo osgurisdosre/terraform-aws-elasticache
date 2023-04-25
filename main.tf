@@ -47,7 +47,7 @@ resource "aws_elasticache_replication_group" "this" {
   security_group_names        = var.security_group_names
   snapshot_retention_limit    = var.snapshot_retention_limit
   snapshot_window             = var.snapshot_window
-  snapshot_name               = var.snapshot_name
+  snapshot_name               = try(var.snapshot_name, var.replication_group_id)
   subnet_group_name           = var.subnet_group_name
   transit_encryption_enabled  = var.transit_encryption_enabled
   user_group_ids              = try(var.user_group_ids, module.elasticache_user_group.id)
