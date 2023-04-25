@@ -4,7 +4,7 @@ resource "aws_elasticache_user" "this" {
   user_id       = var.user_id
   user_name     = var.user_name
   access_string = var.access_string
-  engine        = var.engine
+  engine        = upper(var.engine)
 
   dynamic "authentication_mode" {
     for_each = var.authentication_mode
