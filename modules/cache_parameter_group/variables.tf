@@ -13,7 +13,7 @@ variable "description" {
 variable "parameters" {
   type        = list(map(string))
   default     = []
-  description = "List of DB parameters to apply"
+  description = "List of Cache parameters to apply"
 }
 
 variable "create" {

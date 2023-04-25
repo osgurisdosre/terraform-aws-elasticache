@@ -13,7 +13,7 @@ variable "create_cache" {
 
 variable "create_elasticache_replication_group" {
   type        = bool
-  default     = true
+  default     = false
   description = "Create the replication group?"
 }
 
@@ -55,7 +55,6 @@ variable "engine" {
 
 variable "replication_group_id" {
   type        = string
-  default     = ""
   description = "Replication group identifier. This parameter is stored as a lowercase string."
 }
 
@@ -73,7 +72,6 @@ variable "automatic_failover_enabled" {
 
 variable "node_type" {
   type        = string
-  default     = "cache.t2.micro"
   description = "Instance class to be used."
 }
 variable "num_cache_clusters" {
@@ -126,7 +124,7 @@ variable "data_tiering_enabled" {
 
 variable "final_snapshot_identifier" {
   type        = string
-  default     = ""
+  default     = null
   description = "The name of your final node group (shard) snapshot."
 }
 
@@ -138,20 +136,10 @@ variable "global_replication_group_id" {
 
 variable "kms_key_id" {
   type        = string
-  default     = ""
+  default     = null
   description = "The ARN of the key that you wish to use if encrypting at rest."
 }
 
-variable "log_delivery_configuration" {
-  type = object({
-    log_type         = string
-    destination_type = string
-    destination      = string
-    enabled          = bool
-  })
-  description = "Specifies the destination and format of Redis SLOWLOG or Redis Engine Log."
-  default     = null
-}
 variable "maintenance_window" {
   type        = string
   default     = "sat:03:00-sat:06:00"
@@ -166,7 +154,7 @@ variable "multi_az_enabled" {
 
 variable "notification_topic_arn" {
   type        = string
-  default     = ""
+  default     = null
   description = "ARN of an SNS topic to send ElastiCache notifications to"
 }
 
@@ -184,13 +172,12 @@ variable "replicas_per_node_group" {
 
 variable "security_group_ids" {
   type        = list(string)
-  default     = []
   description = "One or more Amazon VPC security groups associated with this replication group."
 }
 
 variable "security_group_names" {
   type        = list(string)
-  default     = []
+  default     = null
   description = "List of cache security group names to associate with this replication group."
 }
 
@@ -219,23 +206,27 @@ variable "transit_encryption_enabled" {
 
 variable "user_group_ids" {
   type        = list(string)
-  default     = []
+  default     = null
   description = "User Group ID to associate with the replication group."
 }
 
 variable "description_redis" {
   type        = string
-  default     = "bla"
+  default     = ""
   description = "User-created description for the replication group. Must not be empty"
 }
-
+variable "log_delivery_configuration" {
+  type        = list(map(string))
+  default     = []
+  description = "block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Log"
+}
 
 ##############################################################################################
 #Subnet Group
 variable "description_subnet" {
   type        = string
   default     = null
-  description = " The Description of the ElastiCache Subnet Group."
+  description = "The Description of the ElastiCache Subnet Group."
 }
 
 variable "subnet_group_name" {
@@ -259,7 +250,7 @@ variable "parameter_group_name" {
 variable "family" {
   type        = string
   default     = "redis6.x"
-  description = " The family of the ElastiCache parameter group."
+  description = "The family of the ElastiCache parameter group."
 }
 variable "description_parameter" {
   type        = string
@@ -280,12 +271,12 @@ variable "user_id" {
 }
 variable "user_name" {
   type        = string
-  default     = ""
-  description = " The username of the user."
+  default     = null
+  description = "The username of the user."
 }
 variable "access_string" {
   type        = string
-  default     = ""
+  default     = null
   description = "Access permissions string used for this user. "
 }
 
@@ -304,7 +295,7 @@ variable "authentication_mode" {
 #User Group
 variable "user_group_id" {
   type        = string
-  default     = ""
+  default     = null
   description = "The user group identifier."
 }
 ##############################################################################################

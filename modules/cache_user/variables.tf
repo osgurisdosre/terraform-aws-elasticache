@@ -38,7 +38,6 @@ variable "no_password_required" {
   type    = bool
   default = false
 }
-#AQUI FUNCIONOU#,
 
 variable "create_cache_password" {
   type    = string
@@ -48,5 +47,3 @@ variable "password_count" {
   type    = number
   default = 1
 }
-
-

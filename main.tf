@@ -51,7 +51,15 @@ resource "aws_elasticache_replication_group" "this" {
   subnet_group_name           = var.subnet_group_name
   transit_encryption_enabled  = var.transit_encryption_enabled
   user_group_ids              = try(var.user_group_ids, module.elasticache_user_group.id)
-  #log_delivery_configuration  = var.log_delivery_configuration
+  dynamic "log_delivery_configuration" {
+    for_each = var.log_delivery_configuration
+    content {
+      destination      = log_delivery_configuration.value.destination
+      destination_type = log_delivery_configuration.value.destination_type
+      log_format       = log_delivery_configuration.value.log_format
+      log_type         = log_delivery_configuration.value.log_type
+    }
+  }
   tags = {
     Name = var.replication_group_id
   }
