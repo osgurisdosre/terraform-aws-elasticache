@@ -1,3 +1,111 @@
+# AWS Elasticache Redis Terraform module
+
+Terraform module which creates Elasticache resources on AWS
+
+Root module calls these modules which can also be used separately to create independent resources:
+
+- [cache_parameter_group](https://github.com/osgurisdosre/terraform-aws-elasticache/tree/main/modules/cache_parameter_group) - creates Elasticache parameter group
+- [cache_subnet_group](https://github.com/osgurisdosre/terraform-aws-elasticache/tree/main/modules/cache_subnet_group) - creates Elasticache subnet group 
+- [cache_user](https://github.com/osgurisdosre/terraform-aws-elasticache/tree/main/modules/cache_user) - creates Elasticache user
+- [cache_user_group](https://github.com/osgurisdosre/terraform-aws-elasticache/tree/main/modules/cache_user_group) - creates Elasticache user group 
+
+
+## Usage
+
+```hcl
+module "docdb" {
+  source                    = "osgurisdosre/documentdb/aws"
+
+  cluster_identifier        = "demodb"
+
+  engine                 = "docdb"
+  engine_version         = "4.0.0"
+  cluster_size = 3
+  instance_class = "db.t3.medium"
+  
+  # Credentials
+  master_username           = "user"
+  create_db_password        = true
+
+  availability_zones        = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  vpc_security_group_ids = ["sg-12345678"]
+
+  # DB subnet group
+  create_db_subnet_group    = true
+  subnet_ids = ["subnet-123456789", "subnet-987654321" "subnet-123321123"] 
+
+  # Database Deletion Protection
+  deletion_protection = true
+
+  # DB parameter group
+  create_db_parameter_group = true
+  parameters = [{
+    name  = "tls"
+    value = "enabled"
+  }]
+
+}
+```
+
+## Conditional creation
+
+```hcl
+module "docdb" {
+  source                    = "osgurisdosre/documentdb/aws"
+  
+  # Disable creation of DocumentDB instance(s)
+  create_db                 = false
+
+  # Enable creation of a random password
+  create_db_password        = true
+
+  # Enable creation of subnet group
+  create_db_subnet_group    = true
+  
+  # Enable creation of parameter group
+  create_db_parameter_group = true
+
+}
+```
+
+### Parameter Groups
+
+[Reference](https://docs.aws.amazon.com/documentdb/latest/developerguide/cluster_parameter_groups.html)
+
+Users have the ability to:
+
+- Create a new parameter group (use cluster identifier as name):
+
+```hcl
+  create_db_parameter_group = true
+  parameters = [{
+    name  = "tls"
+    value = "enabled"
+  }]
+```
+
+- Pass the name of a parameter group to use that has been created outside of the module:
+
+```hcl
+  create_db_parameter_group = false
+  db_parameter_group_name   = "custom-docdb-4.0" # must already exist in AWS
+```
+
+- Use a default parameter group provided by AWS
+
+```hcl
+  create_db_parameter_group = false
+```
+
+## Examples
+
+To-do:
+
+## Notes
+
+1. This module does not create Elasticache security group. Use [terraform-aws-security-group](https://github.com/terraform-aws-modules/terraform-aws-security-group) module for this.
+2. By default, the variable `create_db_password` is set to true. Therefore, even if the user provides a password, it will not be read. The `create_db_password` variable should be set to false and the `passwords` variable should have a non-null value to be read and used.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
