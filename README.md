@@ -11,7 +11,70 @@ Root module calls these modules which can also be used separately to create inde
 
 
 ## Usage
-To-do:
+```
+module "elasticache" {
+  source = "osgurisdosre/elasticache/aws"
+
+  create_cache         = true
+  replication_group_id = "redis-app"
+  description_redis    = "Redis App"
+  node_type            = "cache.t2.micro"
+  security_group_ids   = ["sg-0000000000000", "sg-111111111111111"]
+  num_cache_clusters   = 3
+
+  # Cache subnet group
+  create_elasticache_subnet_group = true
+  subnet_group_name               = "elasticache-subnets"
+  subnet_ids                      = ["subnet-123456789", "subnet-987654321", "subnet-123321123"]
+
+  # Cache parameter group
+  create_elasticache_parameter_group = true
+  parameters = [{
+    name  = "activerehashing"
+    value = "yes"
+  }]
+
+  # Cache user
+  create_elasticache_user = true
+  create_cache_password   = true
+
+  user_name     = "userapp"
+  user_id       = "userapp"
+  access_string = "on ~* +@all"
+  authentication_mode = [{
+    type = "password"
+  }]
+
+  # Cache user group
+  create_elasticache_user_group = true
+  user_group_id                 = "app"
+}
+```
+## Conditional creation
+
+```
+module "elasticache" {
+  source                    = "osgurisdosre/documentdb/aws"
+  
+  # Disable creation of Elasticache
+  create_cache                = false
+
+  # Enable creation of a random password
+  create_cache_password       = true
+
+  # Enable creation of subnet group
+  create_elasticache_subnet_group    = true
+  
+  # Enable creation of parameter group
+  create_elasticache_parameter_group = true
+
+  # Enable creation of user
+    create_elasticache_user  = true
+
+  # Enable creation of user group
+ create_elasticache_user_group = true
+}
+```
 
 ## Examples
 
