@@ -27,7 +27,7 @@ resource "aws_elasticache_replication_group" "this" {
   num_cache_clusters          = var.num_cache_clusters
   engine                      = var.engine
   engine_version              = var.engine_version
-  parameter_group_name        = var.parameter_group_name
+  parameter_group_name        = coalesce(var.parameter_group_name, var.replication_group_id)
   port                        = var.port
   preferred_cache_cluster_azs = var.preferred_cache_cluster_azs
   apply_immediately           = var.apply_immediately
@@ -75,7 +75,7 @@ module "elasticache_parameter_group" {
 
   create = var.create_elasticache_parameter_group
 
-  name        = var.parameter_group_name
+  name        = coalesce(var.parameter_group_name, var.replication_group_id)
   family      = var.family
   description = var.description_parameter
   parameters  = var.parameters
