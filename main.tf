@@ -97,15 +97,13 @@ module "elasticache_user" {
   create                = var.create_elasticache_user
   create_cache_password = var.create_cache_password
 
-  user_id              = var.user_id
-  user_name            = var.user_name
-  access_string        = var.access_string
-  engine               = upper(var.engine)
-  no_password_required = var.no_password_required
-  passwords            = var.pass
+  user_id       = var.user_id
+  user_name     = var.user_name
+  access_string = var.access_string
+  engine        = upper(var.engine)
   authentication_mode = [{
     type      = var.authentication_mode[0].type
-    passwords = try(var.password, local.password)
+    passwords = try(local.password, null)
   }]
   tags = var.tags
 }

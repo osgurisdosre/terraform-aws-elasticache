@@ -25,11 +25,6 @@ variable "engine" {
   default = "REDIS"
 }
 
-variable "no_password_required" {
-  type    = bool
-  default = false
-}
-
 variable "create_cache_password" {
   type    = bool
   default = false

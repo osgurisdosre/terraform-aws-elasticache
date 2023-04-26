@@ -286,7 +286,11 @@ variable "authentication_mode" {
     type      = optional(string)
     passwords = optional(string)
   }))
-  description = "Denotes the user's authentication properties."
+  default = [{
+    passwords = null
+    type      = null
+  }]
+  description = "Denotes the user's authentication properties. Possible of type options are: password, no-password-required or iam."
 }
 ##############################################################################################
 #User Group
